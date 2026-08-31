@@ -1,79 +1,318 @@
-// 1. Seleção dos elementos do DOM
-const numeroSenha = document.querySelector('.parametro-senha__texto');
-const botoes = document.querySelectorAll('.parametro-senha__botao');
-const campoSenha = document.querySelector('#campo-senha');
-const checkbox = document.querySelectorAll('.checkbox');
+// ===============================
+// ELEMENTOS DO HTML
+// ===============================
 
-// 2. Bancos de dados de caracteres (Alfabeto corrigido)
-const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz'; // Corrigido de uvxywz para uvwxy$
-const numeros = '0123456789';
-const simbolos = '!@%*?#¨&+-.';
+const campoSenha = document.getElementById("campo-senha");
 
-// 3. Configuração de tamanho inicial da senha
-let tamanhoSenha = 12;
-numeroSenha.textContent = tamanhoSenha;
+const tamanhoTexto = document.getElementById("tamanho");
 
-// 4. Configuração dos eventos de clique nos botões (- e +)
-botoes[0].onclick = diminuiTamanho;
-botoes[1].onclick = aumentaTamanho;
+const botaoDiminuir = document.getElementById("diminuir");
 
-// 5. Monitoramento dos checkboxes (Gera nova senha ao marcar/desmarcar)
-checkbox.forEach(box => {
-    box.onchange = geraSenha;
-});
+const botaoAumentar = document.getElementById("aumentar");
 
-// 6. Funções de controle de tamanho
-function diminuiTamanho() {
-    if (tamanhoSenha > 1) {
-        tamanhoSenha--;
+const botaoGerar = document.getElementById("gerar");
+
+const checkboxMaiusculo =
+    document.getElementById("maiusculo");
+
+const checkboxMinusculo =
+    document.getElementById("minusculo");
+
+const checkboxNumero =
+    document.getElementById("numero");
+
+const checkboxSimbolo =
+    document.getElementById("simbolo");
+
+const barra =
+    document.querySelector(".barra");
+
+const textoForca =
+    document.getElementById("texto-forca");
+
+
+// ===============================
+// CONFIGURAÇÕES
+// ===============================
+
+let tamanho = 12;
+
+
+// Caracteres disponíveis
+const letrasMaiusculas =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const letrasMinusculas =
+    "abcdefghijklmnopqrstuvwxyz";
+
+const numeros =
+    "0123456789";
+
+const simbolos =
+    "!@#$%&*()_+-=[]{}<>?";
+
+
+// ===============================
+// GERAR SENHA
+// ===============================
+
+function gerarSenha() {
+
+    let caracteres = "";
+
+
+    // Adiciona letras maiúsculas
+    if (checkboxMaiusculo.checked) {
+        caracteres += letrasMaiusculas;
     }
-    numeroSenha.textContent = tamanhoSenha;
-    geraSenha();
-}
 
-function aumentaTamanho() {
-    if (tamanhoSenha < 20) {
-        tamanhoSenha++;
-    }
-    numeroSenha.textContent = tamanhoSenha;
-    geraSenha();
-}
 
-// 7. Função principal para geração da senha aleatória
-function geraSenha() {
-    let alfabeto = '';
-
-    // Verifica quais opções estão marcadas e monta o banco de caracteres
-    if (checkbox[0].checked) {
-        alfabeto += letrasMaiusculas;
-    }
-    if (checkbox[1].checked) {
-        alfabeto += letrasMinusculas;
-    }
-    if (checkbox[2].checked) {
-        alfabeto += numeros;
-    }
-    if (checkbox[3].checked) {
-        alfabeto += simbolos;
+    // Adiciona letras minúsculas
+    if (checkboxMinusculo.checked) {
+        caracteres += letrasMinusculas;
     }
 
-    // Se nenhuma caixa estiver selecionada, limpa o campo e interrompe a função
-    if (alfabeto.length === 0) {
-        campoSenha.value = 'Selecione uma opção';
+
+    // Adiciona números
+    if (checkboxNumero.checked) {
+        caracteres += numeros;
+    }
+
+
+    // Adiciona símbolos
+    if (checkboxSimbolo.checked) {
+        caracteres += simbolos;
+    }
+
+
+    // Se nenhuma opção estiver selecionada
+    if (caracteres.length === 0) {
+
+        campoSenha.value = "";
+
+        barra.className = "barra";
+
+        textoForca.textContent =
+            "Selecione pelo menos uma opção";
+
+        textoForca.className =
+            "parametro-senha-textos";
+
         return;
     }
 
-    // Realiza o sorteio dos caracteres com base no tamanho definido
-    let senha = '';
-    for (let i = 0; i < tamanhoSenha; i++) {
-        let numeroAleatorio = Math.floor(Math.random() * alfabeto.length);
-        senha += alfabeto[numeroAleatorio];
+
+    let senha = "";
+
+
+    // Gera cada caractere da senha
+    for (let i = 0; i < tamanho; i++) {
+
+        const indice =
+            Math.floor(
+                Math.random() * caracteres.length
+            );
+
+        senha += caracteres[indice];
     }
 
-    // Exibe a senha gerada na tela
+
+    // Coloca a senha no input
     campoSenha.value = senha;
+
+
+    // Verifica a força
+    verificarForcaSenha(senha);
 }
 
-// 8. Execução automática ao iniciar a página para não começar em branco
-geraSenha();
+
+// ===============================
+// VERIFICAR FORÇA DA SENHA
+// ===============================
+
+function verificarForcaSenha(senha) {
+
+    let pontos = 0;
+
+
+    // Verifica tamanho
+    if (senha.length >= 8) {
+        pontos++;
+    }
+
+    if (senha.length >= 12) {
+        pontos++;
+    }
+
+    if (senha.length >= 16) {
+        pontos++;
+    }
+
+
+    // Verifica letra maiúscula
+    if (/[A-Z]/.test(senha)) {
+        pontos++;
+    }
+
+
+    // Verifica letra minúscula
+    if (/[a-z]/.test(senha)) {
+        pontos++;
+    }
+
+
+    // Verifica número
+    if (/[0-9]/.test(senha)) {
+        pontos++;
+    }
+
+
+    // Verifica símbolo
+    if (/[^A-Za-z0-9]/.test(senha)) {
+        pontos++;
+    }
+
+
+    // Remove classes antigas
+    barra.className = "barra";
+
+    textoForca.className =
+        "parametro-senha-textos";
+
+
+    // ===============================
+    // SENHA FRACA
+    // ===============================
+
+    if (pontos <= 3) {
+
+        barra.classList.add("fraca");
+
+        textoForca.textContent =
+            "Senha fraca";
+
+        textoForca.classList.add(
+            "texto-fraca"
+        );
+    }
+
+
+    // ===============================
+    // SENHA MÉDIA
+    // ===============================
+
+    else if (pontos <= 5) {
+
+        barra.classList.add("media");
+
+        textoForca.textContent =
+            "Senha média";
+
+        textoForca.classList.add(
+            "texto-media"
+        );
+    }
+
+
+    // ===============================
+    // SENHA FORTE
+    // ===============================
+
+    else {
+
+        barra.classList.add("forte");
+
+        textoForca.textContent =
+            "Senha forte";
+
+        textoForca.classList.add(
+            "texto-forte"
+        );
+    }
+}
+
+
+// ===============================
+// BOTÃO +
+// ===============================
+
+botaoAumentar.addEventListener(
+    "click",
+    function () {
+
+        // Limite máximo: 30 caracteres
+        if (tamanho < 30) {
+
+            tamanho++;
+
+            tamanhoTexto.textContent =
+                tamanho;
+
+            gerarSenha();
+        }
+    }
+);
+
+
+// ===============================
+// BOTÃO -
+// ===============================
+
+botaoDiminuir.addEventListener(
+    "click",
+    function () {
+
+        // Limite mínimo: 4 caracteres
+        if (tamanho > 4) {
+
+            tamanho--;
+
+            tamanhoTexto.textContent =
+                tamanho;
+
+            gerarSenha();
+        }
+    }
+);
+
+
+// ===============================
+// BOTÃO GERAR NOVA SENHA
+// ===============================
+
+botaoGerar.addEventListener(
+    "click",
+    gerarSenha
+);
+
+
+// ===============================
+// CHECKBOXES
+// ===============================
+
+checkboxMaiusculo.addEventListener(
+    "change",
+    gerarSenha
+);
+
+checkboxMinusculo.addEventListener(
+    "change",
+    gerarSenha
+);
+
+checkboxNumero.addEventListener(
+    "change",
+    gerarSenha
+);
+
+checkboxSimbolo.addEventListener(
+    "change",
+    gerarSenha
+);
+
+
+// ===============================
+// GERAR SENHA AO ABRIR A PÁGINA
+// ===============================
+
+gerarSenha();

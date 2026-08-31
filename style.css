@@ -1,152 +1,313 @@
-{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
 body {
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-font-family: Arial, sans-serif;
-background: #f2f4f7;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
 }
 
-.container {
-width: 420px;
-padding: 30px;
-background: #ffffff;
-border-radius: 16px;
-box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+
+/* ===============================
+   CONTEÚDO
+================================ */
+
+.conteudo {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-h1 {
-text-align: center;
-margin-bottom: 25px;
-color: #222;
+.conteudo-titulo {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-label {
-display: block;
-margin-bottom: 8px;
-font-weight: bold;
-color: #333;
+.titulo-principal {
+    font-size: 28px;
+    color: #222;
+    margin-bottom: 8px;
 }
 
-.password-container {
-display: flex;
-gap: 8px;
-margin-bottom: 25px;
+.titulo-secundario {
+    font-size: 16px;
+    color: #777;
+    font-weight: normal;
 }
 
-#password {
-flex: 1;
-padding: 12px;
-border: 2px solid #ddd;
-border-radius: 8px;
-font-size: 16px;
-outline: none;
-background: #f8f9fa;
+
+/* ===============================
+   CAMPO DA SENHA
+================================ */
+
+.conteudo-senha {
+    margin-bottom: 5px;
 }
 
-button {
-border: none;
-border-radius: 8px;
-padding: 0 15px;
-cursor: pointer;
-font-weight: bold;
+.conteudo-senha label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-weight: bold;
+    color: #333;
 }
 
-#copyButton {
-background: #4285f4;
-color: white;
+#campo-senha {
+    width: 100%;
+
+    padding: 15px;
+
+    font-size: 20px;
+    text-align: center;
+
+    border: 2px solid #ddd;
+    border-radius: 8px;
+
+    background: #f8f8f8;
+    color: #333;
 }
 
-#copyButton:hover {
-background: #3367d6;
+
+/* ===============================
+   PARÂMETROS
+================================ */
+
+.parametro {
+    background: white;
+
+    width: 100%;
+    max-width: 500px;
+
+    margin-top: 20px;
+    padding: 30px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.length-container {
-display: flex;
-align-items: center;
-gap: 15px;
-margin-bottom: 25px;
+.parametro-titulo {
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: #222;
 }
 
-#length {
-flex: 1;
-cursor: pointer;
+.parametro-coluna__senha {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
 }
 
-#lengthValue {
-min-width: 35px;
-padding: 6px 10px;
-text-align: center;
-border-radius: 6px;
-background: #eee;
-font-weight: bold;
+.parametro-senha {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
 }
 
-.options {
-margin-bottom: 25px;
+.parametro-senha:last-child {
+    border-bottom: none;
 }
 
-.options label {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 12px;
-font-weight: normal;
-cursor: pointer;
+.parametro-senha__titulo {
+    font-size: 17px;
+    margin-bottom: 15px;
+    color: #333;
 }
 
-.options input[type="checkbox"] {
-width: 18px;
-height: 18px;
-cursor: pointer;
+
+/* ===============================
+   CHECKBOXES
+================================ */
+
+.parametro-senha-checkbox {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 12px 0;
 }
 
-.generate {
-width: 100%;
-padding: 14px;
-background: #222;
-color: white;
-font-size: 16px;
-margin-bottom: 25px;
+.checkbox {
+    width: 18px;
+    height: 18px;
+
+    cursor: pointer;
 }
 
-.generate:hover {
-background: #000;
+.parametro-senha-checkbox label {
+    cursor: pointer;
+    color: #555;
 }
 
-.strength-container {
-margin-top: 10px;
+
+/* ===============================
+   BOTÕES DE TAMANHO
+================================ */
+
+.parametro-senha-botoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
 }
 
-.strength-bar {
-width: 100%;
-height: 10px;
-background: #ddd;
-border-radius: 10px;
-overflow: hidden;
+.parametro-senha__botao {
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: #333;
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
-#strengthProgress {
-width: 0%;
-height: 100%;
-border-radius: 10px;
-transition: width 0.3s ease, background-color 0.3s ease;
+.parametro-senha__botao:hover {
+    background-color: #555;
 }
 
-#strengthText {
-text-align: center;
-margin-top: 10px;
-font-weight: bold;
+.parametro-senha__texto {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    min-width: 40px;
+
+    text-align: center;
 }
 
-#error {
-color: #d93025;
-text-align: center;
-margin-top: 15px;
-font-size: 14px;
+
+/* ===============================
+   BARRA DE FORÇA
+================================ */
+
+.barra {
+    width: 100%;
+    height: 12px;
+
+    background-color: #ddd;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.barra::after {
+    content: "";
+
+    display: block;
+
+    height: 100%;
+    width: 0%;
+
+    border-radius: 10px;
+
+    transition: all 0.4s ease;
+}
+
+
+/* SENHA FRACA */
+
+.barra.fraca::after {
+    width: 33%;
+
+    background-color: #e74c3c;
+}
+
+
+/* SENHA MÉDIA */
+
+.barra.media::after {
+    width: 66%;
+
+    background-color: #f1c40f;
+}
+
+
+/* SENHA FORTE */
+
+.barra.forte::after {
+    width: 100%;
+
+    background-color: #2ecc71;
+}
+
+
+/* TEXTO DA FORÇA */
+
+.parametro-senha-textos {
+    text-align: center;
+
+    margin-top: 10px;
+
+    font-weight: bold;
+
+    font-size: 16px;
+}
+
+.texto-fraca {
+    color: #e74c3c;
+}
+
+.texto-media {
+    color: #d4a500;
+}
+
+.texto-forte {
+    color: #2ecc71;
+}
+
+
+/* ===============================
+   BOTÃO GERAR
+================================ */
+
+.botao-gerar {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #333;
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+
+    transition: 0.2s;
+}
+
+.botao-gerar:hover {
+    background-color: #555;
 }
